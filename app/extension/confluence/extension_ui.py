@@ -42,6 +42,6 @@ def app_specific_action(webdriver, datasets):
         def sub_measure():
             page.go_to_url("{CONFLUENCE_SETTINGS.server_url}/pages/viewpage.action?pageId={app_specific_page_id}")
             page.wait_until_visible((By.ID, "title-text"))  # Wait for title field visible
-            page.wait_until_visible((By.CSS_SELECTOR, "div[data-macro-name=xsd-table], div[data-macro-name=xsd-image]"))
+            page.wait_until_visible((By.CSS_SELECTOR, ".git-plugin-container"))
         sub_measure()
     measure()
