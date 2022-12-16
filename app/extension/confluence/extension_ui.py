@@ -40,8 +40,9 @@ def app_specific_action(webdriver, datasets):
 
         @print_timing("selenium_app_custom_action:view_page")
         def sub_measure():
-            page.go_to_url("{CONFLUENCE_SETTINGS.server_url}/pages/viewpage.action?pageId={app_specific_page_id}")
+            page.go_to_url(f"{CONFLUENCE_SETTINGS.server_url}/pages/viewpage.action?pageId={app_specific_page_id}")
             page.wait_until_visible((By.ID, "title-text"))  # Wait for title field visible
-            page.wait_until_visible((By.CSS_SELECTOR, "div[data-macro-name=xsd-table], div[data-macro-name=xsd-image]"))
+            page.wait_until_any_ec_presented(selectors=[(By.CSS_SELECTOR, "div[data-macro-name=xsd-table]"),
+                                                        (By.CSS_SELECTOR, "p[data-macro-name=xsd-image]")])
         sub_measure()
     measure()
