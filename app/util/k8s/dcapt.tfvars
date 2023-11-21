@@ -10,12 +10,12 @@
 # Unique name of your enterprise-scale test cluster.
 # This value can not be altered after the configuration has been applied.
 # ! REQUIRED !
-environment_name = "dcapt-product"
+environment_name = "dcapt-bitbucket-1"
 
 # Supported products: jira, confluence, bitbucket and bamboo.
 # e.g.: products = ["confluence"]
 # ! REQUIRED !
-products = ["product-to-deploy"]
+products = ["bitbucket"]
 
 # Default AWS region for DCAPT snapshots.
 region = "us-east-2"
@@ -33,7 +33,7 @@ resource_tags = {Name: "dcapt-testing"}
 # Bitbucket - ["m5.4xlarge"]
 # Crowd - ["m5.xlarge"]
 # ! REQUIRED !
-instance_types     = ["m5.2xlarge"]
+instance_types     = ["m5.4xlarge"]
 instance_disk_size = 100
 
 # Minimum and maximum size of the EKS cluster.

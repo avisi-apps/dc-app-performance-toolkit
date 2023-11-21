@@ -12,12 +12,12 @@
 # Unique name of your small-scale test cluster.
 # This value can not be altered after the configuration has been applied.
 # ! REQUIRED !
-environment_name = "dcapt-product-small"
+environment_name = "dcapt-bb-dev1"
 
 # Supported products: jira, confluence and bitbucket
 # e.g.: products = ["confluence"]
 # ! REQUIRED !
-products = ["product-to-deploy"]
+products = ["bitbucket"]
 
 # Default AWS region for DCAPT snapshots.
 region = "us-east-2"
@@ -34,7 +34,7 @@ resource_tags = {Name: "dcapt-testing-small"}
 # Confluence, Jira  - use default value
 # Bitbucket - ["t3.2xlarge"]
 # ! REQUIRED !
-instance_types     = ["t3.xlarge"]
+instance_types     = ["t3.2xlarge"]
 instance_disk_size = 100
 
 # Minimum and maximum size of the EKS cluster.
