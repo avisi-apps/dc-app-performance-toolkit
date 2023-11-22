@@ -114,7 +114,11 @@ modules:
       httpsampler.ignore_failed_embedded_resources: "true"
   selenium:
     chromedriver:
+<<<<<<< HEAD
       version: "130.0.6723.91" # Supports Chrome version 130. You can refer to https://googlechromelabs.github.io/chrome-for-testing
+=======
+      version: "119.0.6045.105" # Supports Chrome version 118. You can refer to https://googlechromelabs.github.io/chrome-for-testing
+>>>>>>> 6dacff0a (Add locusts load tests)
 reporting:
 - data-source: sample-labels
   module: junit-xml
