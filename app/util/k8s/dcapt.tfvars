@@ -11,33 +11,33 @@
 # This value can not be altered after the configuration has been applied.
 # Only lowercase letters, numbers, dashes, and dots are allowed.
 # ! REQUIRED !
-environment_name = "dcapt-product"
+environment_name = "dcapt-confluence-large1"
 
 # Supported products: jira, confluence, bitbucket, crowd and bamboo.
 # For JSM set product as jira.
 # e.g.: products = ["jira"]
 # ! REQUIRED !
-products = ["product-to-deploy"]
+products = ["confluence"]
 
 # License
 # To avoid storing license in a plain text file, we recommend storing it in an environment variable prefixed with `TF_VAR_` (i.e. `TF_VAR_jira_license`) and keep the below line commented out
 # If storing license as plain-text is not a concern for this environment, feel free to uncomment the following line and supply the license here.
 # ! IMPORTANT ! Please make sure valid license is used without spaces and new line symbols.
 # ! REQUIRED !
-jira_license = "jira-license"
+jira_license       = "jira-license"
 confluence_license = "confluence-license"
-bitbucket_license = "bitbucket-license"
-crowd_license = "crowd-license"
-bamboo_license = "bamboo-license"
+bitbucket_license  = "bitbucket-license"
+crowd_license      = "crowd-license"
+bamboo_license     = "bamboo-license"
 
 # Replica count.
 # Number of product application nodes.
 # Note: For initial installation this value needs to be set to 1 and it can be changed only after product is fully
 # installed and configured.
-jira_replica_count = 1
+jira_replica_count       = 1
 confluence_replica_count = 1
-bitbucket_replica_count = 1
-crowd_replica_count = 1
+bitbucket_replica_count  = 1
+crowd_replica_count      = 1
 
 # (Optional) Domain name used by the ingress controller.
 # The final ingress domain is a subdomain within this domain. (eg.: environment.domain.com)
@@ -63,7 +63,7 @@ whitelist_cidr = ["0.0.0.0/0"]
 snapshots_json_file_path = "dcapt-snapshots.json"
 
 # (optional) Custom tags for all resources to be created. Please add all tags you need to propagate among the resources.
-resource_tags = {Name: "dcapt-testing"}
+resource_tags = { Name : "dcapt-testing" }
 
 # Instance types that is preferred for EKS node group.
 instance_types     = ["m5.2xlarge"]
@@ -86,11 +86,11 @@ max_cluster_capacity = 6
 ################################################################################
 # Create a docker-in-docker privileged container as execution environment pod
 
-start_test_deployment = "true"
+start_test_deployment       = "true"
 test_deployment_cpu_request = "3"
-test_deployment_cpu_limit = "4"
+test_deployment_cpu_limit   = "4"
 test_deployment_mem_request = "8Gi"
-test_deployment_mem_limit = "8Gi"
+test_deployment_mem_limit   = "8Gi"
 
 ################################################################################
 # Jira/JSM Settings
@@ -192,10 +192,10 @@ confluence_min_heap = "12288m"
 confluence_max_heap = "12288m"
 
 # Synchrony instance resource configuration
-synchrony_cpu       = "1"
-synchrony_mem       = "3Gi"
-synchrony_min_heap  = "1024m"
-synchrony_max_heap  = "2048m"
+synchrony_cpu        = "1"
+synchrony_mem        = "3Gi"
+synchrony_min_heap   = "1024m"
+synchrony_max_heap   = "2048m"
 synchrony_stack_size = "2048k"
 
 # Confluence NFS instance resource configuration
@@ -295,12 +295,12 @@ bitbucket_nfs_limits_cpu      = "3"
 bitbucket_nfs_limits_memory   = "10Gi"
 
 # Opensearch resource configuration for Bitbucket
-bitbucket_opensearch_requests_cpu = "1.5"
+bitbucket_opensearch_requests_cpu    = "1.5"
 bitbucket_opensearch_requests_memory = "4Gi"
-bitbucket_opensearch_limits_cpu = "2"
-bitbucket_opensearch_limits_memory = "5Gi"
-bitbucket_opensearch_storage = "1000"
-bitbucket_opensearch_replicas = "2"
+bitbucket_opensearch_limits_cpu      = "2"
+bitbucket_opensearch_limits_memory   = "5Gi"
+bitbucket_opensearch_storage         = "1000"
+bitbucket_opensearch_replicas        = "2"
 
 
 # RDS instance configurable attributes. Note that the allowed value of allocated storage and iops may vary based on instance type.
@@ -381,8 +381,8 @@ crowd_termination_grace_period = 0
 # The master user credential for the database instance.
 # If username is not provided, it'll be default to "postgres".
 # If password is not provided, a random password will be generated.
-crowd_db_master_username     = "atlcrowd"
-crowd_db_master_password     = "Password1!"
+crowd_db_master_username = "atlcrowd"
+crowd_db_master_password = "Password1!"
 
 # Custom values file location. Defaults to an empty string which means only values from config.tfvars
 # are passed to Helm chart. Variables from config.tfvars take precedence over those defined in a custom values.yaml.
