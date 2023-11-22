@@ -8,12 +8,9 @@ logger = init_logger(app_type='confluence')
 @run_as_specific_user(username='admin', password='admin')  # run as specific user
 def app_specific_action(locust):
     r = locust.get('/rest/git-plugin/1.0/servers', catch_response=True)  # call app-specific GET endpoint
-    content = r.content.decode('utf-8')   # decode response content
+    json = r.json()
 
-    if 'Github' not in content:
-        logger.error(f"'Github' was not found in {content}")
-    assert 'Github' in content  # assert specific string in response content
+    assert r.status_code == 200
 
-    if 'Bitbucket' not in content:
-        logger.error(f"'Bitbucket' was not found in {content}")
-    assert 'Bitbucket' in content  # assert specific string in response content
+    assert json[0]['name'] == 'GitHub'
+    assert json[1]['name'] == 'Bitbucket'
