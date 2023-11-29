@@ -1,5 +1,3 @@
-import random
-
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
@@ -43,11 +41,15 @@ def app_specific_action(webdriver, datasets):
         @print_timing("selenium_app_custom_action:undo-transition")
         def sub_measure():
             page.go_to_url(f"{JIRA_SETTINGS.server_url}/browse/{issue_key}")
+
+            page.wait_until_clickable((By.ID, "opsbar-transitions_more")).click()
             # Click on Start progress button in issue to transition
-            page.wait_until_clickable((By.ID, "action_id_11")).click()
+            page.wait_until_clickable((By.ID, "action_id_51")).click()
+
+            page.wait_until_clickable((By.ID, "issue-workflow-transition-submit")).click()
 
             page.wait_until_any_ec_text_presented_in_el(
-                selector_text_list=[((By.CSS_SELECTOR, "#status-val span"), 'IN PROGRESS')])
+                selector_text_list=[((By.CSS_SELECTOR, "#opsbar-transitions_more .dropdown-text"), 'In Progress')])
 
             page.wait_until_clickable((By.ID, "opsbar-operations_more")).click()
 
@@ -56,6 +58,6 @@ def app_specific_action(webdriver, datasets):
             page.wait_until_clickable((By.CSS_SELECTOR, "#undo-transition-dialog .submit-button")).click()
 
             page.wait_until_any_ec_text_presented_in_el(
-                selector_text_list=[((By.CSS_SELECTOR, "#status-val span"), 'OPEN')])
+                selector_text_list=[((By.CSS_SELECTOR, "#opsbar-transitions_more .dropdown-text"), 'To Do')])
         sub_measure()
     measure()
