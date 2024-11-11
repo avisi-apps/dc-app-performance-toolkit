@@ -1,4 +1,4 @@
-# This file configures the Terraform for Atlassian DC on Kubernetes for Data Center applications performance testing
+# This file configures Terraform for Atlassian DC on Kubernetes for Data Center applications performance testing
 # with DCAPT toolkit and "small" dataset.
 # WARNING: this configuration deploys low capacity cluster with "small" dataset and does not suite for full scale
 # performance results generation.
@@ -13,22 +13,22 @@
 # This value can not be altered after the configuration has been applied.
 # Only lowercase letters, numbers, dashes, and dots are allowed.
 # ! REQUIRED !
-environment_name = "dcapt-confluence-small"
+environment_name = "dcapt-product-small"
 
 # Supported products: jira, confluence and bitbucket.
 # For JSM set product as jira.
 # e.g.: products = ["jira"]
 # ! REQUIRED !
-products = ["confluence"]
+products = ["product-to-deploy"]
 
 # License
 # To avoid storing license in a plain text file, we recommend storing it in an environment variable prefixed with `TF_VAR_` (i.e. `TF_VAR_jira_license`) and keep the below line commented out
 # If storing license as plain-text is not a concern for this environment, feel free to uncomment the following line and supply the license here.
 # ! IMPORTANT ! Please make sure valid license is used without spaces and new line symbols.
 # ! REQUIRED !
-jira_license       = "jira-license"
+jira_license = "jira-license"
 confluence_license = "confluence-license"
-bitbucket_license  = "bitbucket-license"
+bitbucket_license = "bitbucket-license"
 
 # (Optional) Domain name used by the ingress controller.
 # The final ingress domain is a subdomain within this domain. (eg.: environment.domain.com)
@@ -54,7 +54,7 @@ whitelist_cidr = ["0.0.0.0/0"]
 snapshots_json_file_path = "dcapt-snapshots.json"
 
 # (optional) Custom tags for all resources to be created. Please add all tags you need to propagate among the resources.
-resource_tags = { Name : "dcapt-testing-small" }
+resource_tags = {Name: "dcapt-testing-small"}
 
 # Instance types that is preferred for EKS node group.
 instance_types     = ["t3.xlarge"]
@@ -186,10 +186,10 @@ confluence_min_heap = "2048m"
 confluence_max_heap = "2048m"
 
 # Synchrony instance resource configuration
-synchrony_cpu        = "1"
-synchrony_mem        = "2.5Gi"
-synchrony_min_heap   = "1024m"
-synchrony_max_heap   = "2048m"
+synchrony_cpu       = "1"
+synchrony_mem       = "2.5Gi"
+synchrony_min_heap  = "1024m"
+synchrony_max_heap  = "2048m"
 synchrony_stack_size = "2048k"
 
 # Storage
@@ -294,12 +294,12 @@ bitbucket_nfs_limits_cpu      = "1.5"
 bitbucket_nfs_limits_memory   = "6Gi"
 
 # Opensearch resource configuration for Bitbucket
-bitbucket_opensearch_requests_cpu    = "1"
+bitbucket_opensearch_requests_cpu = "1"
 bitbucket_opensearch_requests_memory = "4Gi"
-bitbucket_opensearch_limits_cpu      = "1.5"
-bitbucket_opensearch_limits_memory   = "6Gi"
-bitbucket_opensearch_storage         = "100"
-bitbucket_opensearch_replicas        = "2"
+bitbucket_opensearch_limits_cpu = "1.5"
+bitbucket_opensearch_limits_memory = "6Gi"
+bitbucket_opensearch_storage = "100"
+bitbucket_opensearch_replicas = "2"
 
 
 # RDS instance configurable attributes. Note that the allowed value of allocated storage and iops may vary based on instance type.
