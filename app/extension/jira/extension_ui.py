@@ -44,9 +44,7 @@ def app_specific_action(webdriver, datasets):
 
             page.wait_until_clickable((By.ID, "opsbar-transitions_more")).click()
             # Click on Start progress button in issue to transition
-            page.wait_until_clickable((By.ID, "action_id_51")).click()
-
-            page.wait_until_clickable((By.ID, "issue-workflow-transition-submit")).click()
+            page.wait_until_clickable((By.XPATH, "//span[contains(text(), \"In Progress\")]")).click()
 
             page.wait_until_any_ec_text_presented_in_el(
                 selector_text_list=[((By.CSS_SELECTOR, "#opsbar-transitions_more .dropdown-text"), 'In Progress')])
