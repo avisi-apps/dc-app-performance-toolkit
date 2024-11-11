@@ -5,7 +5,7 @@ settings:
   verbose: false
   check-updates: false                 # disable bzt check for updates
   env:
-    application_hostname: test_confluence_instance.atlassian.com   # Confluence DC hostname without protocol, port and postfix e.g. test-confluence.atlassian.com or localhost
+    application_hostname: a6e7e7abe4fbd4d88b5df383218cbbbc-344073649.us-east-2.elb.amazonaws.com   # Confluence DC hostname without protocol, port and postfix e.g. test-confluence.atlassian.com or localhost
     application_protocol: http         # http or https
     application_port: 80               # 80, 443, 8080, 1990, etc
     secure: True                       # Set False to allow insecure connections, e.g. when using self-signed SSL certificate
@@ -114,15 +114,7 @@ modules:
       httpsampler.ignore_failed_embedded_resources: "true"
   selenium:
     chromedriver:
-<<<<<<< HEAD
-<<<<<<< HEAD
       version: "130.0.6723.91" # Supports Chrome version 130. You can refer to https://googlechromelabs.github.io/chrome-for-testing
-=======
-      version: "119.0.6045.105" # Supports Chrome version 118. You can refer to https://googlechromelabs.github.io/chrome-for-testing
->>>>>>> 6dacff0a (Add locusts load tests)
-=======
-      version: "118.0.5993.70" # Supports Chrome version 118. You can refer to https://googlechromelabs.github.io/chrome-for-testing
->>>>>>> 0cdb5daf (Hide webdriver)
 reporting:
 - data-source: sample-labels
   module: junit-xml
