@@ -1,4 +1,4 @@
-# This file configures the Terraform for Atlassian DC on Kubernetes for Data Center applications performance testing
+# This file configures t# This file configures the Terraform for Atlassian DC on Kubernetes for Data Center applications performance testing
 # with DCAPT toolkit and enterprise-scale dataset.
 # Please configure this file carefully before installing the infrastructure.
 # See https://developer.atlassian.com/platform/marketplace/dc-apps-performance-and-scale-testing/ for more information.
@@ -11,13 +11,13 @@
 # This value can not be altered after the configuration has been applied.
 # Only lowercase letters, numbers, dashes, and dots are allowed.
 # ! REQUIRED !
-environment_name = "dcapt-confluence-large1"
+environment_name = "dcapt-product"
 
 # Supported products: jira, confluence, bitbucket, crowd and bamboo.
 # For JSM set product as jira.
 # e.g.: products = ["jira"]
 # ! REQUIRED !
-products = ["confluence"]
+products = ["product-to-deploy"]
 
 # License
 # To avoid storing license in a plain text file, we recommend storing it in an environment variable prefixed with `TF_VAR_` (i.e. `TF_VAR_jira_license`) and keep the below line commented out
