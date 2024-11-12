@@ -3,7 +3,7 @@ from locustio.common_utils import init_logger, jira_measure, run_as_specific_use
 logger = init_logger(app_type='jira')
 
 
-@jira_measure("locust_app_specific_action")
+@jira_measure("locust_manage_custom_field_values_query_custom_fields_action")
 @run_as_specific_user(username='admin', password='admin')  # run as specific user
 def app_specific_action(locust):
     r = locust.get('/rest/editcustomfieldvalues/latest/customfields', catch_response=True)  # call app-specific GET endpoint
