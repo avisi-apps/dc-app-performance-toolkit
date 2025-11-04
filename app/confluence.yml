@@ -5,14 +5,14 @@ settings:
   verbose: false
   check-updates: false                 # disable bzt check for updates
   env:
-    application_hostname: test_confluence_instance.atlassian.com   # Confluence DC hostname without protocol, port and postfix e.g. test-confluence.atlassian.com or localhost
+    application_hostname: a38b63f9aba64434ead52a2f2313b036-1897375608.us-east-2.elb.amazonaws.com   # Confluence DC hostname without protocol, port and postfix e.g. test-confluence.atlassian.com or localhost
     application_protocol: http         # http or https
     application_port: 80               # 80, 443, 8080, 1990, etc
     secure: True                       # Set False to allow insecure connections, e.g. when using self-signed SSL certificate
     application_postfix: /confluence   # e.g. /confluence for TerraForm deployment url like `http://a1234-54321.us-east-2.elb.amazonaws.com/confluence`. Leave this value blank for url without postfix.
     admin_login: admin
     admin_password: admin
-    load_executor: jmeter              # jmeter and locust are supported. jmeter by default.
+    load_executor: locust              # jmeter and locust are supported. jmeter by default.
     concurrency: 200                   # number of concurrent virtual users for jmeter or locust scenario
     test_duration: 45m
     ramp-up: 5m                        # time to spin all concurrent users
@@ -39,7 +39,6 @@ settings:
     # Custom dataset section.
     local_chrome_binary_path:       # e.g. /usr/bin/google-chrome-stable. Leave it blank to use default Chrome binary path.
     custom_dataset_query:   # Write CQL query to add CQL output to the app/datasets/confluence/custom_pages.csv, e.g. "title ~ 'AppPage*'"
- 
 
 services:
   - module: shellexec
