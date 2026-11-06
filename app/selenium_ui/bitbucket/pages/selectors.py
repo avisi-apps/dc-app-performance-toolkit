@@ -87,8 +87,13 @@ class PopupLocators:
         (By.CSS_SELECTOR, ".css-1dqf51u"),
         (By.CSS_SELECTOR, ".css-1kflcxk"),
         (By.CSS_SELECTOR, ".css-1gh2dqy"),
-        (By.CSS_SELECTOR, "[data-testid='whats-new-modal'] button[aria-label='Close modal'] > span > span[aria-hidden='true']")
+        (By.XPATH, "//*[@data-testid='whats-new-modal']//button[@aria-label='Close modal']//span//span[@aria-hidden='true']")
     ]
+
+
+class CommonLocators:
+    spinner = OrderedDict({"7.0.0": (By.CSS_SELECTOR, ".spinner-wrapper"),
+                            "10.0.0": (By.CSS_SELECTOR, ".centered-spinner")})
 
 
 class LoginPageLocators:
@@ -163,10 +168,12 @@ class PullRequestLocator:
 
     pull_request_page_merge_button = (By.CLASS_NAME, 'merge-button')
 
-    diagram_selector = (By.CLASS_NAME, 'branches-diagram')
+    # Bitbucket 10.2+ renders the merge diagram as '.merge-branches' instead of '.branches-diagram'
+    diagram_selector = (By.CSS_SELECTOR, '.branches-diagram, .merge-branches')
     merge_diagram_selector = (By.CLASS_NAME, "merge-diagram")
     pull_request_modal_merge_button = (By.CSS_SELECTOR, ".merge-dialog button[type='submit']")
-    del_branch_checkbox_selector = (By.NAME, 'deleteSourceRef')
+    # Bitbucket 10.2+ renamed the checkbox from 'deleteSourceRef' to 'deleteSource'
+    del_branch_checkbox_selector = (By.CSS_SELECTOR, "input[name='deleteSourceRef'], input[name='deleteSource']")
     delete_branch_per_merge_checkbox = (By.CSS_SELECTOR, "input[type='checkbox']")
     updates_info_banner = (By.CSS_SELECTOR, ".pull-request-onboarding>footer>button")
 
@@ -174,13 +181,19 @@ class PullRequestLocator:
 class BranchesLocator:
 
     branches_name = (By.ID, "branch-name-column")
-    branches_action = (By.ID, "branch-actions")
-    branches_action_create_branch = (By.CSS_SELECTOR, "a.create-branch")
+    branches_action = OrderedDict({"7.0.0": (By.ID, "branch-actions"),
+                                    "10.0.0": (By.CSS_SELECTOR, ".ref-selector-more-actions > button")})
+    branches_action_create_branch = OrderedDict({"7.0.0": (By.CSS_SELECTOR, "a.create-branch"),
+                                                "10.0.0": (By.XPATH, "//span[contains(text(), 'Create branch from here')]")})
+
+    delete_branch_action = OrderedDict({"7.0.0": (By.CSS_SELECTOR, "li>a.delete-branch"),
+                                        "10.0.0": (By.XPATH, "//button[contains(@data-testid, 'delete-branch-action')]")})
     new_branch_name_textfield = (By.CSS_SELECTOR, "input.text.branch-name")
     new_branch_submit_button = (By.ID, "create-branch-submit")
     search_branch_textfield = (By.ID, 'paged-table-input-for-branch-list')
     search_branch_action = (By.CSS_SELECTOR, '.branch-actions-column>button')
-    delete_branch_dialog_submit = (By.ID, 'delete-branch-dialog-submit')
+    delete_branch_dialog_submit = OrderedDict({"7.0.0": (By.ID, 'delete-branch-dialog-submit'),
+                                                   "10.0.0": (By.XPATH, "//button[contains(@data-testid, 'delete-branch-modal-confirm-button')]")})
 
 
 class RepoCommitsLocator:
