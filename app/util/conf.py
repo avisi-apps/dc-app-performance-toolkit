@@ -2,8 +2,8 @@ import yaml
 
 from util.project_paths import JIRA_YML, CONFLUENCE_YML, BITBUCKET_YML, JSM_YML, CROWD_YML, BAMBOO_YML
 
-TOOLKIT_VERSION = '7.6.0'
-UNSUPPORTED_VERSION = '6.3.0'
+TOOLKIT_VERSION = '8.11.0'
+UNSUPPORTED_VERSION = '8.8.0'
 
 
 def read_yml_file(file):
@@ -14,9 +14,9 @@ def read_yml_file(file):
 class BaseAppSettings:
 
     def __init__(self, config_yml):
-        obj = read_yml_file(config_yml)
-        self.settings = obj['settings']
-        self.env_settings = obj['settings']['env']
+        self.obj = read_yml_file(config_yml)
+        self.settings = self.obj['settings']
+        self.env_settings = self.obj['settings']['env']
         self.hostname = self.get_property('application_hostname')
         self.protocol = self.get_property('application_protocol')
         self.port = self.get_property('application_port')
@@ -27,10 +27,23 @@ class BaseAppSettings:
         self.analytics_collector = self.get_property('allow_analytics')
         self.load_executor = self.get_property('load_executor')
         self.secure = self.get_property('secure')
+        self.environment_compliance_check = self.get_property('environment_compliance_check')
+        self.chromedriver_version = (
+            self.obj.get('modules', {}).get('selenium', {}).get('chromedriver', {}).get('version', None))
 
     @property
     def server_url(self):
         return f'{self.protocol}://{self.hostname}:{self.port}{self.postfix}'
+
+    @property
+    def chrome_options(self):
+        # Returns user-defined chrome options from the YML env section.
+        # Supports 'arguments' (list) and 'experimental_options' (dict).
+        options = self.env_settings.get('chrome_options') or {}
+        return {
+            'arguments': options.get('arguments') or [],
+            'experimental_options': options.get('experimental_options') or {},
+        }
 
     def get_property(self, property_name):
         if property_name not in self.env_settings:
@@ -47,6 +60,7 @@ class JiraSettings(BaseAppSettings):
         self.custom_dataset_query = self.get_property('custom_dataset_query') or ""
         self.verbose = self.settings['verbose']
         self.total_actions_per_hour = self.get_property('total_actions_per_hour')
+        self.local_chrome_binary_path = self.get_property('local_chrome_binary_path')
 
 
 class ConfluenceSettings(BaseAppSettings):
@@ -59,6 +73,7 @@ class ConfluenceSettings(BaseAppSettings):
         self.verbose = self.settings['verbose']
         self.total_actions_per_hour = self.get_property('total_actions_per_hour')
         self.extended_metrics = self.get_property('extended_metrics')
+        self.local_chrome_binary_path = self.get_property('local_chrome_binary_path')
 
 
 class BitbucketSettings(BaseAppSettings):
@@ -69,6 +84,7 @@ class BitbucketSettings(BaseAppSettings):
         self.concurrency = self.get_property('concurrency')
         self.verbose = self.settings['verbose']
         self.total_actions_per_hour = self.get_property('total_actions_per_hour')
+        self.local_chrome_binary_path = self.get_property('local_chrome_binary_path')
 
 
 class JsmSettings(BaseAppSettings):
@@ -84,6 +100,7 @@ class JsmSettings(BaseAppSettings):
         self.custom_dataset_query = self.get_property('custom_dataset_query') or ""
         self.verbose = self.settings['verbose']
         self.insight = self.get_property('insight')
+        self.local_chrome_binary_path = self.get_property('local_chrome_binary_path')
 
 
 class CrowdSettings(BaseAppSettings):
@@ -109,6 +126,7 @@ class BambooSettings(BaseAppSettings):
         self.start_plan_timeout = self.env_settings['start_plan_timeout']
         self.default_dataset_plan_duration = self.env_settings['default_dataset_plan_duration']
         self.total_actions_per_hour = self.get_property('total_actions_per_hour')
+        self.local_chrome_binary_path = self.get_property('local_chrome_binary_path')
 
 
 JIRA_SETTINGS = JiraSettings(config_yml=JIRA_YML)

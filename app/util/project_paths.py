@@ -123,6 +123,7 @@ CONFLUENCE_PAGES = __get_confluence_dataset('pages.csv')
 CONFLUENCE_BLOGS = __get_confluence_dataset('blogs.csv')
 CONFLUENCE_STATIC_CONTENT = __get_confluence_dataset('static-content/files_upload.csv')
 CONFLUENCE_CUSTOM_PAGES = __get_confluence_dataset('custom_pages.csv')
+CONFLUENCE_WORDS = __get_confluence_dataset('static-content/words.csv')
 
 BITBUCKET_YML = __get_bitbucket_yml()
 BITBUCKET_DATASETS = __get_bitbucket_datasets()

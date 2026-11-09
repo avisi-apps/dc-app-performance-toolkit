@@ -4,7 +4,10 @@ from locustio.common_utils import init_logger, jira_measure, run_as_specific_use
 logger = init_logger(app_type='jira')
 
 @jira_measure("locust_user_directory_api_query_user_directories_action")
-@run_as_specific_user(username='admin', password='admin')  # run as specific user
+# WebSudo is a feature that enhances security by requiring administrators to re-authenticate before
+# accessing administrative functions within Atlassian applications.
+# do_websudo=True requires user administrative rights, otherwise requests fail.
+@run_as_specific_user(username='admin', password='admin', do_websudo=False)  # run as specific user
 def app_specific_action(locust):
     r = locust.get('/rest/nl-avisi-sync-add-on/1.0/directories', catch_response=True)  # call app-specific GET endpoint
     content = r.content.decode('utf-8')   # decode response content

@@ -7,7 +7,7 @@ import socket
 
 from datetime import datetime, timezone
 from util.common_util import get_current_version, get_latest_version
-from util.analytics.application_info import BITBUCKET, BAMBOO, CROWD, INSIGHT, JSM, CONFLUENCE
+from util.analytics.application_info import BITBUCKET, BAMBOO, CROWD, INSIGHT, JSM, CONFLUENCE, JIRA
 
 latest_version = get_latest_version()
 current_version = get_current_version()
@@ -107,6 +107,11 @@ def generate_report_summary(collector):
     summary_report.append(f'Success|{success}')
     summary_report.append(f'Has app-specific actions|{bool(collector.app_specific_rates)}')
 
+
+    summary_report.append(f'Applications count|{collector.apps_count}')
+    summary_report.append(f'Custom applications count|{collector.custom_apps_count}')
+    summary_report.append(f'Custom applications count enabled|{collector.custom_apps_count_enabled}')
+
     if collector.app_type == JSM:
         insight = collector.insight
         summary_report.append(f'Insight|{insight}')
@@ -152,6 +157,7 @@ def generate_report_summary(collector):
 
     pretty_report = map(lambda x: format_string_summary_report(x, offset_1st), summary_report)
     write_to_file(pretty_report, summary_report_file)
+    print(f"Results summary log file created: {summary_report_file}")
 
 
 def get_os():
