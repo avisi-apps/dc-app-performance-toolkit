@@ -17,7 +17,7 @@ environment_name = "dcapt-product"
 # For JSM set product as jira.
 # e.g.: products = ["jira"]
 # ! REQUIRED !
-products = ["product-to-deploy"]
+products = ["jira"]
 
 # License
 # To avoid storing license in a plain text file, we recommend storing it in an environment variable prefixed with `TF_VAR_` (i.e. `TF_VAR_jira_license`) and keep the below line commented out
@@ -171,7 +171,7 @@ jira_db_master_password = "Password1!"
 
 # A list of JVM arguments to be passed to the server. Defaults to an empty list.
 # Example: ["-Dproperty=value", "-Dproperty1=value1"]
-jira_additional_jvm_args = ["-Dupm.plugin.upload.enabled=true", "-Dstartup.file.permissions.lenient=true"]
+jira_additional_jvm_args = ["-Dupm.plugin.upload.enabled=true", "-Dstartup.file.permissions.lenient=true", "-Datlassian.upm.signature.check.disabled=true"]
 
 ################################################################################
 # Confluence Settings
