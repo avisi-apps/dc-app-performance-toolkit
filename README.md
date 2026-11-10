@@ -5,31 +5,31 @@ This repository contains Taurus scripts for performance testing of Atlassian Dat
 
 ## Supported versions
 * Supported Jira versions: 
-    * Jira [Long Term Support release](https://confluence.atlassian.com/enterprise/atlassian-enterprise-releases-948227420.html): `9.4.10` and `8.20.26`
+    * Jira [Long Term Support release](https://confluence.atlassian.com/enterprise/atlassian-enterprise-releases-948227420.html): `10.3.26`, `11.3.12`
 
 * Supported Jira Service Management versions: 
-    * Jira Service Management [Long Term Support release](https://confluence.atlassian.com/enterprise/atlassian-enterprise-releases-948227420.html): `5.4.10` and `4.20.26`
+    * Jira Service Management [Long Term Support release](https://confluence.atlassian.com/enterprise/atlassian-enterprise-releases-948227420.html): `10.3.26`, `11.3.12`
     
 * Supported Confluence versions:
-    * Confluence [Long Term Support release](https://confluence.atlassian.com/enterprise/atlassian-enterprise-releases-948227420.html): `7.19.14` and `8.5.1`
+    * Confluence [Long Term Support release](https://confluence.atlassian.com/enterprise/atlassian-enterprise-releases-948227420.html): `9.2.26`, `10.2.19` and `11.0.0` Platform release
 
 * Supported Bitbucket Server versions:
-    * Bitbucket Server [Long Term Support release](https://confluence.atlassian.com/enterprise/atlassian-enterprise-releases-948227420.html): `7.21.16` and `8.9.5`
+    * Bitbucket Server [Long Term Support release](https://confluence.atlassian.com/enterprise/atlassian-enterprise-releases-948227420.html): `9.4.26`, `10.2.8`
 
 * Supported Crowd versions:
-    * Crowd [release notes](https://confluence.atlassian.com/crowd/crowd-release-notes-199094.html): `5.1.4`
+    * Crowd [release notes](https://confluence.atlassian.com/crowd/crowd-release-notes-199094.html): `7.2.4`
   
 * Supported Bamboo versions:
-    * Bamboo [Long Term Support release](https://confluence.atlassian.com/bamboo/bamboo-release-notes-671089224.html): `9.2.5`
+    * Bamboo [Long Term Support release](https://confluence.atlassian.com/bamboo/bamboo-release-notes-671089224.html): `12.1.12`
   
 ## Support
-In case of technical questions, issues or problems with DC Apps Performance Toolkit, contact us for support in the [community Slack](http://bit.ly/dcapt_slack) **#data-center-app-performance-toolkit** channel.
+In case of technical questions, issues or problems with DC Apps Performance Toolkit, contact us for support in the [community Slack](https://go.atlassian.com/dcapt-community-slack) **#data-center-app-performance-toolkit** channel.
 
 ## Installation and set up
 
 #### Dependencies
-* Python 3.8, 3.9, 3.10 or 3.11 and pip
-* JDK 11
+* Python 3.10 - 3.13 and pip
+* JDK 17 or JDK 21
 * Google Chrome web browser
 * Git client (only for Bitbucket DC)
 
@@ -41,7 +41,7 @@ If a first part of ChromeDriver version does not match with a first part of your
 Make sure that you have:
 * [Python](https://www.python.org/downloads/) (see [dependencies](#dependencies) section for supported versions)
 * pip
-* [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11) installed
+* [JDK 17](https://www.oracle.com/java/technologies/downloads/#java17) installed
 * XCode Command Line Tools
 * Google Chrome web browser
 ```
@@ -76,13 +76,17 @@ source venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
+5. Optional: to use locust as main load-executor while running tests uninstall 'trio' and 'trio-websocket because they conflict with gevent monkey-patching used by bzt's Locust wrapper:
+```
+pip uninstall -y trio trio-websocket
+```
 
 ### Linux setup
 Make sure that you have:
 * [Python](https://www.python.org/downloads/) (see [dependencies](#dependencies) section for supported versions)
 * pip
-* [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11) installed
-* Python developer package (e.g. `python3.9-dev` package for Python3.9)
+* [JDK 17](https://www.oracle.com/java/technologies/downloads/#java17) installed
+* Python developer package (e.g. `python3.11-dev` package for Python3.11)
 * Google Chrome web browser
 ```
 python3 --version
@@ -99,7 +103,7 @@ We recommend using [virtualenv](https://virtualenv.pypa.io/en/latest/) for Tauru
 JDK setup (if missing):
 ```
 sudo apt-get update
-sudo apt-get install -y openjdk-11-jre-headless
+sudo apt-get install -y openjdk-17-jre-headless
 ```
 Chrome setup (if missing):
 ```
@@ -110,8 +114,8 @@ sudo apt-get install -y ./google-chrome-stable_current_amd64.deb
 Python and virtualenv setup:
 ```
 sudo apt-get update
-sudo apt-get -y install python3.9-dev python3-pip virtualenv
-sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
+sudo apt-get -y install python3.11-dev python3-pip virtualenv
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
 virtualenv venv -p /usr/bin/python
 source venv/bin/activate
 pip install -r requirements.txt
@@ -119,7 +123,7 @@ pip install -r requirements.txt
 
 ### Windows setup
 #### Installing Taurus manually
-Make sure you have [Python](https://www.python.org/downloads/) (see [dependencies](#dependencies) section for supported versions), pip, and [JDK 11](https://www.oracle.com/java/technologies/downloads/#java11) installed:
+Make sure you have [Python](https://www.python.org/downloads/) (see [dependencies](#dependencies) section for supported versions), pip, and [JDK 17](https://www.oracle.com/java/technologies/downloads/#java17) installed:
 ```
 python --version or python3 --version
 pip --version

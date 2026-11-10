@@ -11,32 +11,56 @@ from selenium_ui.jsm.pages.customer_selectors import UrlManager, LoginPageLocato
 
 class Login(BasePage):
     page_url = LoginPageLocators.login_url
+    base_url = UrlManager().host
     page_loaded_selector = LoginPageLocators.login_submit_button
 
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.is_2sv_login = False
+
+    def is_2sv(self):
+        if not self.get_elements(LoginPageLocators.login_submit_button):
+            self.is_2sv_login = True
+            print("INFO: 2sv login form")
+
     def set_credentials(self, username, password):
-        self.wait_until_visible(LoginPageLocators.login_field)
-        self.get_element(LoginPageLocators.login_field).send_keys(username)
-        self.get_element(LoginPageLocators.password_field).send_keys(password)
-        self.get_element(LoginPageLocators.login_submit_button).click()
+        if self.is_2sv_login:
+            self.wait_until_visible(LoginPageLocators.login_field_2sv)
+            self.get_element(LoginPageLocators.login_field_2sv).send_keys(username)
+            self.get_element(LoginPageLocators.password_field_2sv).send_keys(password)
+            self.get_element(LoginPageLocators.login_submit_button_2sv).click()
+        else:
+            self.wait_until_visible(LoginPageLocators.login_field)
+            self.get_element(LoginPageLocators.login_field).send_keys(username)
+            self.get_element(LoginPageLocators.password_field).send_keys(password)
+            self.get_element(LoginPageLocators.login_submit_button).click()
 
     def is_logged_in(self):
         elements = self.get_elements(CustomerPortalsSelectors.welcome_logged_in_page)
         return True if elements else False
 
     def get_app_version(self):
-        version_str = self.get_element(LoginPageLocators.app_version).get_attribute('content')
-        return version.parse(version_str)
+        if self.is_2sv_login:
+            version_str = self.get_element(LoginPageLocators.app_version_2sv).get_attribute('data-version')
+            return version.parse(version_str)
+        else:
+            version_str = self.get_element(LoginPageLocators.app_version).get_attribute('content')
+            return version.parse(version_str)
 
 
 class TopPanel(BasePage):
 
     def open_profile_menu(self):
-        self.get_element(TopPanelSelectors.profile_icon).click()
+        self.safe_click(TopPanelSelectors.profile_icon)
         self.wait_until_visible(TopPanelSelectors.logout_button)
 
     def logout(self):
-        self.get_element(TopPanelSelectors.logout_button).click()
-        self.wait_until_visible(LoginPageLocators.login_field)
+        self.safe_click(TopPanelSelectors.logout_button)
+        self.wait_until_visible(LoginPageLocators.login_form)
+        if not self.get_elements(LoginPageLocators.login_submit_button):
+            self.wait_until_visible(LoginPageLocators.login_field_2sv)
+        else:
+            self.wait_until_visible(LoginPageLocators.login_field)
 
 
 class CustomerPortals(BasePage):
@@ -48,7 +72,7 @@ class CustomerPortals(BasePage):
         self.wait_until_visible(self.get_selector(CustomerPortalsSelectors.full_portals_list))
 
     def open_random_portal(self):
-        portals = self.get_elements(CustomerPortalsSelectors.portal_from_list)
+        portals = self.get_elements(self.get_selector(CustomerPortalsSelectors.portal_from_list))
         if len(portals) > 1:
             portal = random.choice(portals)
         else:
@@ -118,6 +142,27 @@ class CustomerRequest(BasePage):
         self.get_element(RequestSelectors.add_comment_button).click()
         self.wait_until_invisible(RequestSelectors.add_comment_button)
 
+    def search_for_customer_to_share_with_react_ui(self, customer_name):
+        self.wait_until_visible(RequestSelectors.share_request_button).click()
+        self.wait_until_visible(RequestSelectors.share_request_search_field_react)
+        self.action_chains().move_to_element(
+            self.get_element(RequestSelectors.share_request_search_field_react)).click().perform()
+        self.action_chains().move_to_element(self.get_element(RequestSelectors.share_request_search_field_react)).\
+            send_keys(customer_name).perform()
+        self.wait_until_visible(RequestSelectors.share_request_dropdown_one_elem_react)
+
+        random_customer_name = random.choice(
+            [i.text for i in self.get_elements(RequestSelectors.share_request_dropdown_one_elem_react)])
+
+        self.action_chains().move_to_element(
+            self.get_element(RequestSelectors.share_request_search_field_arrow_react)).click().perform()
+        self.wait_until_invisible(RequestSelectors.share_request_dropdown_react)
+        self.action_chains().move_to_element(self.get_element(
+            RequestSelectors.share_request_search_field_react)).send_keys(
+            random_customer_name).perform()
+        self.wait_until_visible(RequestSelectors.share_request_dropdown_one_elem_react).click()
+
+
     def search_for_customer_to_share_with(self, customer_name):
         if not self.element_exists(RequestSelectors.share_request_button):
             print(f'Request {self.page_url} does not have Share button')
@@ -153,6 +198,10 @@ class CustomerRequest(BasePage):
         self.wait_until_visible(RequestSelectors.share_request_modal_button).click()
         self.wait_until_invisible(RequestSelectors.share_request_modal_button)
 
+    def share_request_react(self):
+        self.wait_until_invisible(RequestSelectors.share_request_dropdown_one_elem_react)
+        self.wait_until_clickable(RequestSelectors.share_request_button_request_widget).click()
+
 
 class Requests(BasePage):
 
@@ -161,7 +210,7 @@ class Requests(BasePage):
         url_manager = UrlManager()
         self.page_url = url_manager.all_requests_url() if all_requests else url_manager.my_requests_url()
 
-    page_loaded_selector = RequestsSelectors.requests_label
+    page_loaded_selector = RequestsSelectors.all_requests_filter
 
 
 class ViewRequestWithInsight(BasePage):

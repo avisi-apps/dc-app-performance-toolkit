@@ -38,7 +38,12 @@ class LoginPageLocators:
     login_field = (By.ID, 'os_username')
     password_field = (By.ID, 'os_password')
     login_submit_button = (By.ID, 'js-login-submit')
+    login_field_2sv = (By.ID, 'username-field')
+    password_field_2sv = (By.ID, 'password-field')
+    login_submit_button_2sv = (By.ID, 'login-button')
     app_version = (By.NAME, "ajs-sdPluginVersion")
+    app_version_2sv = (By.NAME, "application-name")
+    login_form = (By.ID, "login-form")
 
 
 class TopPanelSelectors:
@@ -49,11 +54,13 @@ class TopPanelSelectors:
 
 class CustomerPortalsSelectors:
     welcome_logged_in_page = (By.CSS_SELECTOR, "div.cv-help-center-container")
-    browse_portals_button = (By.CSS_SELECTOR, "button.cv-smart-portal-browse-portals")
+    browse_portals_button = (By.CSS_SELECTOR, "button.cv-smart-portal-browse-portals, "
+                                              ".cv-smart-portal-browse-portals button, "
+                                              "button[data-testid='expand-portal-cards']")
     full_portals_list = OrderedDict({"4.13.0": (By.CSS_SELECTOR, "ul.cv-smart-portal-all-portals-list"),
                                      "4.15.0": (By.CLASS_NAME, "cv-portal-cards-react-container")})
     portal_from_list = OrderedDict({"4.13.0": (By.CSS_SELECTOR, "ul.cv-smart-portal-all-portals-list>li>a>span"),
-                                    "4.15.0": (By.CSS_SELECTOR, "portal-card-item")})
+                                    "4.15.0": (By.CSS_SELECTOR, "li[data-testid='portal-card-item'] a")})
 
 
 class CustomerPortalSelectors:
@@ -79,15 +86,25 @@ class RequestSelectors:
     comment_request_field = OrderedDict({"4.13.0": (By.CSS_SELECTOR, 'textarea#comment-on-request'),
                                          "4.15.0": (By.CLASS_NAME, 'ProseMirror')})
     add_comment_button = (By.XPATH, "//button[contains(text(),'Add')]")
-    share_request_button = (By.CSS_SELECTOR, 'a.js-share-request')
+    share_request_button = (By.XPATH, "//*[self::a or self::span][normalize-space(text())='Share']")
+    share_request_button_request_widget = (By.XPATH, "//button[contains(@data-testid, 'popup-share')]")
     share_request_search_field = (By.ID, 's2id_participants')
     share_request_dropdown = (By.ID, 'select2-drop')
     share_request_dropdown_results = (By.CSS_SELECTOR, '#select2-drop>ul.select2-results>li')
     share_request_dropdown_one_elem = (By.CSS_SELECTOR,
                                        '#select2-drop>ul.select2-results>li>div>span.user-picker-display-name')
-
     share_request_modal_button = (By.XPATH, "//button[contains(text(),'Share')]")
     list_of_requests_types = (By.ID, "cv-request-content")
+
+    # JSM 5.12 Changes in UI
+    share_request_search_field_react = (By.XPATH,
+                                        "//div[starts-with(@id, 'react-select-') and contains(@id, '-placeholder')]")
+    share_request_search_field_arrow_react = (By.XPATH,
+                                              "//div[contains(@class, 'indicatorContainer')]//span[contains(@role, 'img')]")
+    share_request_dropdown_react = (By.XPATH, "//div[starts-with(@id, 'react-select-') and contains(@id, '-listbox')]")
+    share_request_dropdown_one_elem_react = (By.XPATH,
+                                             "//div[starts-with(@id, 'react-select-') and contains(@id, 'option')]/div/div[2]/div[1]/span")
+    share_request_widget_react = (By.ID, 'cp-request-share-root')
 
 
 class InsightSelectors:
@@ -97,3 +114,4 @@ class InsightSelectors:
 class RequestsSelectors:
     my_requests_url = UrlManager().my_requests_url()
     requests_label = (By.XPATH, "//h2[contains(text(),'Requests')]")
+    all_requests_filter = (By.ID, "sd-all-requests-filter")
