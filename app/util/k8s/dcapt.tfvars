@@ -171,7 +171,7 @@ jira_db_master_password = "Password1!"
 
 # A list of JVM arguments to be passed to the server. Defaults to an empty list.
 # Example: ["-Dproperty=value", "-Dproperty1=value1"]
-jira_additional_jvm_args = ["-Dupm.plugin.upload.enabled=true", "-Dstartup.file.permissions.lenient=true"]
+jira_additional_jvm_args = ["-Dupm.plugin.upload.enabled=true", "-Dstartup.file.permissions.lenient=true", "-Datlassian.upm.signature.check.disabled=true"]
 
 ################################################################################
 # Confluence Settings
